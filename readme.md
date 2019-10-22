@@ -96,7 +96,7 @@
         sw.write(path);
     ````
     
-    * 表格读取(返回List<Map)
+    * 表格读取(返回List &lt;Map &gt;)
     ````
         //表头
         Map<String,String> headMap = new LinkedHashMap<>();
@@ -136,7 +136,7 @@
         System.out.println(singleSheetRead.getErrorMsg());
     ````
     
-    * 表格读取(返回List<Java Bean)
+    * 表格读取(返回List &lt;Java Bean&gt;)
     ````
         //表头
         Map<String,String> headMap = new LinkedHashMap<>();
