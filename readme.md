@@ -106,21 +106,34 @@
 
         String path = "C:\\Users\\amazing\\Desktop\\demo.xls";
         FileInputStream fis = new FileInputStream(path);
-        //单元格非空校验
+        //数据校验可以实现ValidateRow
         NullCellCheckReadRow readRowMap = new NullCellCheckReadRow();
-        SimpleExcelRead simpleExcelRead = new SimpleExcelRead(fis,headMap,readRowMap);
+        //数据转换可以实现CellValueHandle
+        CellValueHandle cellValueHandle = new StringCellValueHandle();
+        SingleSheetRead singleSheetRead = new SingleSheetRead(fis,headMap,true,readRowMap,cellValueHandle,1);
 
-        simpleExcelRead.readSingleSheet();
+        singleSheetRead.readSheet();
 
-        List<Map<String,Object>> data= simpleExcelRead.getData();
+        List<Map<String,Object>> data= singleSheetRead.getAllData();
+        List<Map<String,Object>> correctData = singleSheetRead.getCorrectData();
+        List<Map<String,Object>> errorData= singleSheetRead.getErrorData();
 
-        System.out.println();
-
+        System.err.println("全部数据");
         for (int i = 0; i < data.size(); i++) {
             System.out.println(data.get(i).toString());
         }
 
-        System.out.println(readRowMap.errorMsg());
+        System.err.println("正确数据");
+        for (int i = 0; i < correctData.size(); i++) {
+            System.out.println(correctData.get(i).toString());
+        }
+
+        System.err.println("错误数据");
+        for (int i = 0; i < errorData.size(); i++) {
+            System.out.println(errorData.get(i).toString());
+        }
+
+        System.out.println(singleSheetRead.getErrorMsg());
     ````
     
     * 表格读取(返回List<Java Bean)
@@ -133,16 +146,35 @@
 
         String path = "C:\\Users\\amazing\\Desktop\\demo.xls";
         FileInputStream fis = new FileInputStream(path);
-        
-        //非空校验
+
+        //数据校验可以实现ValidateRow
         NullCellCheckReadRow readRowMap = new NullCellCheckReadRow();
+        //数据转换可以实现CellValueHandle
+        CellValueHandle cellValueHandle = new StringCellValueHandle();
 
-        PojoExcelRead<SimplePOJO> pojoPojoExcelRead = new PojoExcelRead<>(fis,headMap,readRowMap,SimplePOJO.class);
-        pojoPojoExcelRead.readSingleSheet();
-        List<SimplePOJO> list = pojoPojoExcelRead.getCastData();
+        PojoExcelRead<SimplePOJO> pojoPojoExcelRead = new PojoExcelRead<>(fis,headMap,
+                true,readRowMap,cellValueHandle,1,SimplePOJO.class);
 
-        System.out.println(readRowMap.errorMsg());
-        list.stream().forEach(l->{
-            System.out.println(l.toString());
-        });
+        pojoPojoExcelRead.readSheet();
+
+        List<SimplePOJO> data= pojoPojoExcelRead.getCastAllData();
+        List<SimplePOJO> correctData = pojoPojoExcelRead.getCastCorrectData();
+        List<SimplePOJO> errorData= pojoPojoExcelRead.getCastErrorData();
+
+        System.err.println("全部数据");
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println(data.get(i).toString());
+        }
+
+        System.err.println("正确数据");
+        for (int i = 0; i < correctData.size(); i++) {
+            System.out.println(correctData.get(i).toString());
+        }
+
+        System.err.println("错误数据");
+        for (int i = 0; i < errorData.size(); i++) {
+            System.out.println(errorData.get(i).toString());
+        }
+
+        System.out.println(pojoPojoExcelRead.getErrorMsg());
     ````

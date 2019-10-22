@@ -1,18 +1,20 @@
 package com.amazing.poi.excel.read;
 
 import com.amazing.poi.excel.commons.ObjectCastUtils;
+import com.amazing.poi.excel.core.CellValueHandle;
 import com.amazing.poi.excel.core.ValidateRow;
 import com.amazing.poi.excel.exception.HandDataException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author amzing.
@@ -20,27 +22,49 @@ import java.util.Map;
  * @time 2019/7/15 22:47
  * @since 0.1
  */
-public class PojoExcelRead<T extends Object> extends SimpleExcelRead {
+public class PojoExcelRead<T extends Object> extends SingleSheetRead {
 
-    private List<T> data;
+    private Logger logger = LoggerFactory.getLogger(SingleSheetRead.class);
+
+    private List<T> castAllData;
+    private List<T> castCorrectData;
+    private List<T> castErrorData;
 
     private Class clazz;
 
-    public PojoExcelRead(InputStream inp, Map head, Class clazz) {
-        super(inp, head);
-        this.data = new ArrayList<>();
+    public PojoExcelRead(InputStream inp,
+                         Map<String, String> headMap,
+                         Boolean filterHead,
+                         ValidateRow validate,
+                         CellValueHandle cellValueHandle,
+                         int headRows,
+                         Class clazz) throws IOException {
+        super(inp, headMap, filterHead, validate, cellValueHandle, headRows);
+        this.castAllData = new ArrayList<>();
+        this.castCorrectData = new ArrayList<>();
+        this.castErrorData = new ArrayList<>();
         this.clazz = clazz;
     }
 
-    public PojoExcelRead(InputStream inp, Map head, ValidateRow validate, Class clazz) {
-        super(inp, head, validate);
-        this.data = new ArrayList<>();
+    public PojoExcelRead(InputStream inp, Map<String, String> headMap, int headRows, Class clazz) throws IOException {
+        super(inp, headMap, headRows);
+        this.castAllData = new ArrayList<>();
+        this.castCorrectData = new ArrayList<>();
+        this.castErrorData = new ArrayList<>();
+        this.clazz = clazz;
+    }
+
+    public PojoExcelRead(InputStream inp, Class clazz) throws IOException {
+        super(inp);
+        this.castAllData = new ArrayList<>();
+        this.castCorrectData = new ArrayList<>();
+        this.castCorrectData = new ArrayList<>();
         this.clazz = clazz;
     }
 
     @Override
-    public void handData(Map<String, Object> tempData) throws HandDataException {
-
+    public Object handleData(Object tempData) throws HandDataException {
+        Map<String,Object> mapData = (Map<String, Object>) tempData;
         Object o = null;
 
         PropertyDescriptor[] pds = null;
@@ -67,10 +91,11 @@ public class PojoExcelRead<T extends Object> extends SimpleExcelRead {
         }
 
         try {
+            //通过反射构造java对象
             for (int i = 0; i < pds.length; i++) {
                 PropertyDescriptor p = pds[i];
                 String displayName = p.getDisplayName();
-                Object value = tempData.get(displayName);
+                Object value = mapData.get(displayName);
 
                 if (null == value) {
                     continue;
@@ -85,10 +110,33 @@ public class PojoExcelRead<T extends Object> extends SimpleExcelRead {
             throw new HandDataException("hand data invocation error", e);
         }
 
-        data.add((T) o);
+        return (T) o;
     }
 
-    public List<T> getCastData() {
-        return data;
+    @Override
+    public void handleAllData(Object tempData) throws HandDataException {
+        this.castAllData.add((T) tempData);
+    }
+
+    @Override
+    public void handleCorrectData(Object tempData) throws HandDataException {
+        this.castCorrectData.add((T) tempData);
+    }
+
+    @Override
+    public void handleErrorData(Object tempData) throws HandDataException {
+        this.castErrorData.add((T) tempData);
+    }
+
+    public List<T> getCastAllData() {
+        return castAllData;
+    }
+
+    public List<T> getCastCorrectData() {
+        return castCorrectData;
+    }
+
+    public List<T> getCastErrorData() {
+        return castErrorData;
     }
 }

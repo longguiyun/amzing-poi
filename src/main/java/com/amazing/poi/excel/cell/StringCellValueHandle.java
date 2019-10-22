@@ -1,17 +1,21 @@
-package com.amazing.poi.excel.commons;
+package com.amazing.poi.excel.cell;
 
+import com.amazing.poi.excel.core.CellValueHandle;
 import org.apache.poi.ss.usermodel.Cell;
 
 import java.util.Objects;
 
 /**
- * @author longguiyun
- * @version 1.0
- * @date 2019/7/15 17:52
+ * @author amzing.
+ * @version 0.1
+ * @time 2019/10/22 23:32
+ * @since 0.1
  */
-public class CellValueType {
+public class StringCellValueHandle implements CellValueHandle {
 
-    public static Object getCellValue(Cell cell) {
+
+    @Override
+    public Object getCellValue(Cell cell) {
         Object value = null;
 
         if (Objects.isNull(cell)) {
@@ -43,6 +47,6 @@ public class CellValueType {
                 break;
         }
 
-        return value;
+        return Objects.isNull(value)? null : String.valueOf(value);
     }
 }

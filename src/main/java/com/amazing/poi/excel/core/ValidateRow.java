@@ -11,7 +11,6 @@ package com.amazing.poi.excel.core;
  */
 public interface ValidateRow<T extends Object> {
 
-    void validate(T t, int rowNumber);
+    Object validate(T t, int rowNumber);
 
-    String errorMsg();
 }

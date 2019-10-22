@@ -1,4 +1,4 @@
-package com.amazing.poi.excel.read;
+package com.amazing.poi.excel.validata;
 
 import com.amazing.poi.excel.core.ValidateRow;
 
@@ -10,12 +10,9 @@ import com.amazing.poi.excel.core.ValidateRow;
 public class NotValidateRow implements ValidateRow {
 
     @Override
-    public void validate(Object o, int rowNumber) {
-        return;
-    }
-
-    @Override
-    public String errorMsg() {
+    public Object validate(Object o, int rowNumber) {
         return null;
     }
+
+
 }

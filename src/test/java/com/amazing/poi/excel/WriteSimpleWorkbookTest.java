@@ -1,8 +1,9 @@
 package com.amazing.poi.excel;
 
 import com.amazing.poi.excel.merge.BasicMergeExcelCells;
+import com.amazing.poi.excel.wirte.MergeExcelWorkbook;
+import com.amazing.poi.excel.wirte.SimpleExcelWorkbook;
 import org.junit.Test;
-import org.slf4j.impl.SimpleLogger;
 
 import java.io.IOException;
 import java.util.*;
@@ -12,12 +13,12 @@ import java.util.*;
  * @version 1.0
  * @date 2019/6/17 20:10
  */
-public class SimpleWorkbookTest {
+public class WriteSimpleWorkbookTest {
 
     @Test
     public void fillHeadTest() throws IOException {
 
-        String path = "D:\\code\\poi-demo\\demo.xls";
+        String path = "C:\\Users\\amazing\\Desktop\\m-demo-fill-head.xls";
         LinkedHashMap<String,String> headMap = new LinkedHashMap<>();
         headMap.put("name","姓名");
         headMap.put("age","年龄");
@@ -31,7 +32,7 @@ public class SimpleWorkbookTest {
     @Test
     public void fillContentTest() throws Exception {
 
-        String path = "C:\\Users\\amazing\\Desktop\\demo.xls";
+        String path = "C:\\Users\\amazing\\Desktop\\m-fill-content.xls";
         LinkedHashMap<String,String> headMap = new LinkedHashMap<>();
         headMap.put("name","姓名");
         headMap.put("age","年龄");
@@ -65,7 +66,7 @@ public class SimpleWorkbookTest {
     @Test
     public void mergeCellsTest() throws Exception {
 
-        String path = "D:\\code\\poi-demo\\demo.xls";
+        String path = "C:\\Users\\amazing\\Desktop\\m-cell-1.xls";
         LinkedHashMap<String,String> headMap = new LinkedHashMap<>();
         headMap.put("name","姓名");
         headMap.put("age","年龄");
@@ -109,7 +110,7 @@ public class SimpleWorkbookTest {
     @Test
     public void mergeCellsTest2() throws Exception {
 
-        String path = "D:\\code\\poi-demo\\demo.xls";
+        String path = "C:\\Users\\amazing\\Desktop\\m-cell-2.xls";
         LinkedHashMap<String,String> headMap = new LinkedHashMap<>();
         headMap.put("name","姓名");
         headMap.put("age","年龄");
@@ -153,7 +154,7 @@ public class SimpleWorkbookTest {
     @Test
     public void mergeCellsTest3() throws Exception {
 
-        String path = "D:\\code\\poi-demo\\demo.xls";
+        String path = "C:\\Users\\amazing\\Desktop\\m-cell-3.xls";
         LinkedHashMap<String,String> headMap = new LinkedHashMap<>();
         headMap.put("name","姓名");
         headMap.put("age","年龄");
@@ -203,7 +204,7 @@ public class SimpleWorkbookTest {
     @Test
     public void mergeCellsTest4() throws Exception {
 
-        String path = "D:\\code\\poi-demo\\demo.xls";
+        String path = "C:\\Users\\amazing\\Desktop\\m-cell-4.xls";
         LinkedHashMap<String,String> headMap = new LinkedHashMap<>();
         headMap.put("name","姓名");
         headMap.put("age","年龄");
@@ -247,7 +248,7 @@ public class SimpleWorkbookTest {
     @Test
     public void mergeCellsTest5() throws Exception {
 
-        String path = "D:\\code\\poi-demo\\demo.xls";
+        String path = "C:\\Users\\amazing\\Desktop\\m-cell-5.xls";
         LinkedHashMap<String,String> headMap = new LinkedHashMap<>();
         headMap.put("name","姓名");
         headMap.put("age","年龄");

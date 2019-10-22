@@ -1,4 +1,4 @@
-package com.amazing.poi.excel;
+package com.amazing.poi.excel.wirte;
 
 import com.amazing.poi.excel.cell.BasicCreateExcelCell;
 import com.amazing.poi.excel.core.AbstractExcelCell;

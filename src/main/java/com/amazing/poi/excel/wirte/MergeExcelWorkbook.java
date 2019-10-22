@@ -1,4 +1,4 @@
-package com.amazing.poi.excel;
+package com.amazing.poi.excel.wirte;
 
 import com.amazing.poi.excel.core.MergeExcelCells;
 import org.apache.poi.ss.usermodel.Row;
@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * <p>
+ * 单元格合并
+ * </p>
  * @author longguiyun
  * @version 1.0
  * @date 2019/6/17 20:10

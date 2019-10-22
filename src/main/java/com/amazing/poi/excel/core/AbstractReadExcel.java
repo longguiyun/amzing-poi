@@ -17,15 +17,18 @@ public abstract class AbstractReadExcel {
     private Logger logger = LoggerFactory.getLogger(AbstractReadExcel.class);
 
     private Workbook wb;
-    private InputStream inp;
 
-    public AbstractReadExcel(InputStream inp) {
-        this.inp = inp;
+    public AbstractReadExcel(InputStream inp) throws IOException {
+        wb = WorkbookFactory.create(inp);
     }
 
-    public void readSingleSheet() throws IOException {
-        wb = WorkbookFactory.create(inp);
-        Sheet sheet = wb.getSheetAt(0);
+    public Workbook getWb() {
+        return wb;
+    }
+
+    public void readSheet(int sheetIndex) {
+
+        Sheet sheet = getSheet(sheetIndex);
         int firstRow = sheet.getFirstRowNum();
         int lastRow = sheet.getLastRowNum();
 
@@ -36,6 +39,10 @@ public abstract class AbstractReadExcel {
         }
     }
 
+    public Sheet getSheet(int index){
+        return getWb().getSheetAt(index);
+    }
 
     protected abstract void readRow(Row row, int rowNumber);
+
 }

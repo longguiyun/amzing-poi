@@ -1,4 +1,4 @@
-package com.amazing.poi.excel.read;
+package com.amazing.poi.excel.validata;
 
 import com.amazing.poi.excel.core.ValidateRow;
 
@@ -14,16 +14,12 @@ import java.util.Map;
  */
 public class NullCellCheckReadRow implements ValidateRow<Map<String, Object>> {
 
-    private StringBuilder errorMsg;
-
-    public NullCellCheckReadRow() {
-        this.errorMsg = new StringBuilder();
-    }
-
     @Override
-    public void validate(Map<String, Object> map, int rowNumber) {
+    public String validate(Map<String, Object> map, int rowNumber) {
         Iterator iterator = map.entrySet().iterator();
         int cellNumber = 1;
+
+        StringBuilder errorMsg = new StringBuilder();
         errorMsg.append("\n\t");
         while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
@@ -33,10 +29,8 @@ public class NullCellCheckReadRow implements ValidateRow<Map<String, Object>> {
 
             cellNumber++;
         }
+
+        return errorMsg.toString();
     }
 
-    @Override
-    public String errorMsg() {
-        return this.errorMsg.toString();
-    }
 }
